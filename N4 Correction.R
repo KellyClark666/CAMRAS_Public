@@ -30,4 +30,4 @@ for (i in 1:length(all.imgs)){
   }
 }
 
-mclapply(id.list, do.stuff, mc.cores = length(id.list))
+mclapply(id.list, do.n4, mc.cores = length(id.list))
