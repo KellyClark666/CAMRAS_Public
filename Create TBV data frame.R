@@ -24,17 +24,10 @@ for (j in 1:length(FAST_TB_seg)){
   Scan = gsub("_brain_seg.nii.gz","",labels[6])  
   seg_img = readnii(FAST_TB_seg[j])
   
-  #Creat binary CSF mask. CSF intensity = 1, all other tissue is > 1
-  CSF_mask = seg_img>1
-  mprage = readnii(paste0(dirname(dirs[i]),"/mass/",
-                          Scan,"_brain.nii.gz"))
-  
-  #multiply CSF mask (CSF=0) by full brain to mask CSF
-  CSF_masked_brain = mprage*CSF_mask
- 
-  Total_Brain =  CSF_masked_brain>0
+  #Creat binary mask. CSF intensity = 1, all other tissue is > 1
+  Total_Brain = seg_img>1
   Total_Brain_Lab = table(Total_Brain[Total_Brain==1])
-  vreslab = voxres(mprage,units = "cm")
+  vreslab = voxres(seg_img,units = "cm")
   TBV = Total_Brain_Lab*vreslab
   
   all_together = cbind(Subj,Site,Scan,TBV)
